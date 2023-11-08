@@ -4,11 +4,13 @@ public class SolarSystemMain {
 
     int endprogram = 0;
 
-    SolarSystem SS = new SolarSystem(2560, 1440);
+    SolarSystem SS = new SolarSystem(1500, 800);
+    
+    Sun sol = new Sun(50, "WHITE", "Sol");
     ArrayList<Planet> planets = new ArrayList<Planet>();
     ArrayList<Moon> moons = new ArrayList<Moon>();
-
-    Sun sol = new Sun(100, "WHITE", "Sol");
+    ArrayList<Asteroid> asteroids = new ArrayList<Asteroid>();
+    Comet halley = new Comet(525, 27394, 3, "PINK", "Halley's Comet", 0.9, 3);
 
     public SolarSystemMain()
     {
@@ -22,6 +24,11 @@ public class SolarSystemMain {
         planets.add(new Planet(250,779.94,5,"RED","Mars"));
         moons.add(new Moon(3, 10, 0.32, 1, "WHITE", "Phobos"));
         moons.add(new Moon(3, 15, 1.26, 1, "WHITE", "Deimos"));
+
+        for (int i = 0; i < 100; i++)
+        {
+            asteroids.add(new Asteroid());
+        }
 
         planets.add(new Planet(350,4332.59,25,"PINK","Jupiter"));
         moons.add(new Moon(4, 35, 1.77, 2, "WHITE", "Io"));
@@ -46,7 +53,7 @@ public class SolarSystemMain {
         moons.add(new Moon(6, 65, 13.46, 2, "WHITE", "Oberon"));
 
         planets.add(new Planet(650,60195,15,"BLUE","Neptune"));
-        moons.add(new Moon(7, 25, 5.88, 2, "WHITE", "Miranda"));
+        moons.add(new Moon(7, 25, -5.88, 2, "WHITE", "Triton"));
 
         simulate();
     }
@@ -60,22 +67,23 @@ public class SolarSystemMain {
 
             for (int i = 0; i < planets.size(); i++)
             {
+                planets.get(i).updatePosition();
                 SS.drawSolarObject(planets.get(i).distance, planets.get(i).angle, planets.get(i).diameter, planets.get(i).col);
             }
             for (int i = 0; i < moons.size(); i++)
             {
+                moons.get(i).updatePosition();
                 int planetID = moons.get(i).parent;
                 SS.drawSolarObjectAbout(moons.get(i).distance, moons.get(i).angle, moons.get(i).diameter, moons.get(i).col, planets.get(planetID).distance, planets.get(planetID).angle);
             }
+            for (int i = 0; i < asteroids.size(); i++)
+            {
+                asteroids.get(i).updatePosition();
+                SS.drawSolarObject(asteroids.get(i).distance, asteroids.get(i).angle, 2, "GRAY");
+            }
 
-            for (int i = 0; i < (planets.size()); i++)
-            {
-                planets.get(i).updatePosition();
-            }
-            for (int i = 0; i < (moons.size()); i++)
-            {
-                moons.get(i).updatePosition();
-            }
+            halley.updatePosition();
+            SS.drawCometObject(halley.distance, halley.angle, halley.diameter, halley.col, halley.eccentricity, halley.direction);
             SS.finishedDrawing();
         }
     }

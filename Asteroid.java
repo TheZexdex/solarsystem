@@ -1,25 +1,19 @@
 import java.util.Random;
 
-public class Moon {
+public class Asteroid {
 
     Random rand = new Random();
 
-    int parent;
     double distance;
     double period;
-    double diameter;
-    String col;
-    String name;
     double angle;
 
-    public Moon(int pa, double ds, double pe, double dm, String c, String n)
+    public Asteroid()
     {
-        parent = pa;
-        distance = ds/2;
-        period = pe;
-        diameter = dm;
-        col = c;
-        name = n;
+        double factor = rand.nextDouble();
+
+        distance = 270 + (factor*40);
+        period = 1200 + (factor*800);
 
         angle = rand.nextDouble()*360;
     }

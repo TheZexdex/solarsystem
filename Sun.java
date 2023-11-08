@@ -10,9 +10,4 @@ public class Sun {
         col = c;
         name = n;
     }
-
-    public void updatePosition()
-    {
-
-    }
 }

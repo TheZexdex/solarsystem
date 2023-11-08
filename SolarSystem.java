@@ -207,6 +207,72 @@ public class SolarSystem extends JFrame
 			}
 		}
 	}
+	
+	public void drawCometObject(double distance, double angle, double diameter, String col, double eccentricity, int direction)
+	{
+		Color colour = this.getColourFromString(col);
+		double rads = Math.toRadians(angle);
+		double x = 0;
+		double y = 0;
+
+		if (direction == 0)
+		{
+		double centreOfRotationX = (((double) width) / 2.0); 
+		double centreOfRotationY = (((double) height) / 2.0 + (1 + eccentricity) * distance); 
+
+		x = (int) (centreOfRotationX + distance * (1 - eccentricity) * Math.sin(rads)) - diameter / 2;
+		y = (int) (centreOfRotationY + distance * (1 + eccentricity) * Math.cos(rads)) - diameter / 2;
+		}
+		else if (direction == 1)
+		{
+		double centreOfRotationX = (((double) width) / 2.0) + ((1 + eccentricity) * distance); 
+		double centreOfRotationY = ((double) height) / 2.0; 
+
+		x = (int) (centreOfRotationX + distance * (1 + eccentricity) * Math.sin(rads)) - diameter / 2;
+		y = (int) (centreOfRotationY + distance * (1 - eccentricity) * Math.cos(rads)) - diameter / 2;
+		}
+		else if (direction == 2)
+		{
+		double centreOfRotationX = (((double) width) / 2.0); 
+		double centreOfRotationY = (((double) height) / 2.0 - (1 + eccentricity) * distance); 
+
+		x = (int) (centreOfRotationX + distance * (1 - eccentricity) * Math.sin(rads)) - diameter / 2;
+		y = (int) (centreOfRotationY + distance * (1 + eccentricity) * Math.cos(rads)) - diameter / 2;
+		}
+		else if (direction == 3)
+		{
+		double centreOfRotationX = (((double) width) / 2.0) - ((1 + eccentricity) * distance); 
+		double centreOfRotationY = ((double) height) / 2.0; 
+
+		x = (int) (centreOfRotationX + distance * (1 + eccentricity) * Math.sin(rads)) - diameter / 2;
+		y = (int) (centreOfRotationY + distance * (1 - eccentricity) * Math.cos(rads)) - diameter / 2;
+		}
+
+		synchronized (this)
+		{
+			if (things.size() > 1000)
+			{
+				System.out.println("\n\n");
+				System.out.println(" ********************************************************* ");
+				System.out.println(" ***** Only 1000 Entities Supported per Solar System ***** ");
+				System.out.println(" ********************************************************* ");
+				System.out.println("\n\n");
+				System.out.println("If you are't trying to add this many things");
+				System.out.println("to your SolarSystem, then you have probably");
+				System.out.println("forgotten to call the finishedDrawing() method");
+				System.out.println("See the JavaDOC documentation for more information");
+				System.out.println("\n-- Joe");
+				System.out.println("\n\n");
+
+				this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+			}
+			else
+			{
+				SolarObject t = new SolarObject((int)x, (int)y, (int)diameter, colour);
+				things.add(t);
+			}
+		}
+	}
 
 	/**
      * Updates the window to show all objects that have recently been drawn using

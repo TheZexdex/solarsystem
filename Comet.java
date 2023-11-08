@@ -1,25 +1,27 @@
 import java.util.Random;
 
-public class Moon {
+public class Comet {
 
     Random rand = new Random();
 
-    int parent;
     double distance;
     double period;
     double diameter;
     String col;
     String name;
+    double eccentricity;
+    int direction;
     double angle;
 
-    public Moon(int pa, double ds, double pe, double dm, String c, String n)
+    public Comet(double ds, double pe, double dm, String c, String n, double e, int dr)
     {
-        parent = pa;
-        distance = ds/2;
+        distance = ds;
         period = pe;
         diameter = dm;
         col = c;
         name = n;
+        eccentricity = e;
+        direction = dr;
 
         angle = rand.nextDouble()*360;
     }
@@ -29,4 +31,5 @@ public class Moon {
         UpdatePosition UP = new UpdatePosition(angle, period);
         angle = UP.getNewPosition();
     }
+
 }

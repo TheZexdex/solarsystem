@@ -1,12 +1,15 @@
+import java.util.Random;
+
 public class Planet {
+
+    Random rand = new Random();
 
     double distance;
     double period;
     double diameter;
     String col;
     String name;
-
-    double angle = 0;
+    double angle;
 
     public Planet(double ds, double pe, double dm, String c, String n)
     {
@@ -15,14 +18,13 @@ public class Planet {
         diameter = dm;
         col = c;
         name = n;
+
+        angle = rand.nextDouble()*360;
     }
 
     public void updatePosition()
     {
-        angle = angle + (365.25/period);
-        if(angle >= 360)
-        {
-            angle = angle - 360;
-        }
+        UpdatePosition UP = new UpdatePosition(angle, period);
+        angle = UP.getNewPosition();
     }
 }

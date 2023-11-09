@@ -8,7 +8,7 @@ import java.util.*;
  * This class provides a graphical user interface to a model of the solar system
  * @author Joe Finney
  */
-public class SolarSystem extends JFrame 
+public class SolarSystem extends JFrame
 {
 	private int width = 300;
 	private int height = 300;
@@ -35,7 +35,7 @@ public class SolarSystem extends JFrame
 		this.setSize(width, height);
 		this.setBackground(Color.BLACK);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setVisible(true);		
+        this.setVisible(true);
         
         renderingHints = new HashMap<>();
 		renderingHints.put(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
@@ -208,47 +208,47 @@ public class SolarSystem extends JFrame
 		}
 	}
 	
-	public void drawCometObject(double distance, double angle, double diameter, String col, double eccentricity, int direction)
-	{
+	public void drawCometObject(double distance, double angle, double diameter, String col, double eccentricity, int direction) //I Created this new drawCometObject method for drawing comets, it takes in the eccentricty and direction ID args...
+	{ 																															//...as well as the args taken from the drawSolarObject method
 		Color colour = this.getColourFromString(col);
 		double rads = Math.toRadians(angle);
-		double x = 0;
+		double x = 0; //The x and y variables are declared here as they are only then modified in the if statements
 		double y = 0;
 
-		if (direction == 0)
+		if (direction == 0) //A direction ID of 0 causes the comet to swing to the south. The eccentricity calculation is modified accordingly
 		{
 		double centreOfRotationX = (((double) width) / 2.0); 
-		double centreOfRotationY = (((double) height) / 2.0 + (1 + eccentricity) * distance); 
+		double centreOfRotationY = (((double) height) / 2.0) + (2 * eccentricity * distance); 
 
-		x = (int) (centreOfRotationX + distance * (1 - eccentricity) * Math.sin(rads)) - diameter / 2;
-		y = (int) (centreOfRotationY + distance * (1 + eccentricity) * Math.cos(rads)) - diameter / 2;
+		x = (int) (centreOfRotationX + distance * (1 - (eccentricity * eccentricity)) * Math.sin(rads)) - diameter / 2;
+		y = (int) (centreOfRotationY + distance * (1 + (eccentricity * eccentricity)) * Math.cos(rads)) - diameter / 2;
 		}
-		else if (direction == 1)
+		else if (direction == 1)//A direction ID of 1 causes the comet to swing to the east. The eccentricity calculation is modified accordingly
 		{
-		double centreOfRotationX = (((double) width) / 2.0) + ((1 + eccentricity) * distance); 
-		double centreOfRotationY = ((double) height) / 2.0; 
+		double centreOfRotationX = (((double) width) / 2.0) + (2 * eccentricity * distance); 
+		double centreOfRotationY = (((double) height) / 2.0); 
 
-		x = (int) (centreOfRotationX + distance * (1 + eccentricity) * Math.sin(rads)) - diameter / 2;
-		y = (int) (centreOfRotationY + distance * (1 - eccentricity) * Math.cos(rads)) - diameter / 2;
+		x = (int) (centreOfRotationX + distance * (1 + (eccentricity * eccentricity)) * Math.sin(rads)) - diameter / 2;
+		y = (int) (centreOfRotationY + distance * (1 - (eccentricity * eccentricity)) * Math.cos(rads)) - diameter / 2;
 		}
-		else if (direction == 2)
+		else if (direction == 2)//A direction ID of 2 causes the comet to swing to the north. The eccentricity calculation is modified accordingly
 		{
 		double centreOfRotationX = (((double) width) / 2.0); 
-		double centreOfRotationY = (((double) height) / 2.0 - (1 + eccentricity) * distance); 
+		double centreOfRotationY = (((double) height) / 2.0) - (2 * eccentricity * distance); 
 
-		x = (int) (centreOfRotationX + distance * (1 - eccentricity) * Math.sin(rads)) - diameter / 2;
-		y = (int) (centreOfRotationY + distance * (1 + eccentricity) * Math.cos(rads)) - diameter / 2;
+		x = (int) (centreOfRotationX + distance * (1 - (eccentricity * eccentricity)) * Math.sin(rads)) - diameter / 2;
+		y = (int) (centreOfRotationY + distance * (1 + (eccentricity * eccentricity)) * Math.cos(rads)) - diameter / 2;
 		}
-		else if (direction == 3)
+		else if (direction == 3)//A direction ID of 3 causes the comet to swing to the west. The eccentricity calculation is modified accordingly
 		{
-		double centreOfRotationX = (((double) width) / 2.0) - ((1 + eccentricity) * distance); 
-		double centreOfRotationY = ((double) height) / 2.0; 
+		double centreOfRotationX = (((double) width) / 2.0) - (2 * eccentricity * distance); 
+		double centreOfRotationY = (((double) height) / 2.0); 
 
-		x = (int) (centreOfRotationX + distance * (1 + eccentricity) * Math.sin(rads)) - diameter / 2;
-		y = (int) (centreOfRotationY + distance * (1 - eccentricity) * Math.cos(rads)) - diameter / 2;
+		x = (int) (centreOfRotationX + distance * (1 + (eccentricity * eccentricity)) * Math.sin(rads)) - diameter / 2;
+		y = (int) (centreOfRotationY + distance * (1 - (eccentricity * eccentricity)) * Math.cos(rads)) - diameter / 2;
 		}
 
-		synchronized (this)
+		synchronized (this) //The rest of the method now continues the same as the drawSolarObject class. I attempted to have the comets model their changing velocity accurately but the maths involved proved far too complex for me!
 		{
 			if (things.size() > 1000)
 			{
